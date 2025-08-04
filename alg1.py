@@ -27,13 +27,13 @@ def load_books(filename):
             if len(parts) < 5:
                 continue
 
-            # get specific fields
+            # get specific fields (dataset keeps changing ' to â€™ so that part is fixed)
             # title is column 13
-            title = parts[12].strip().lower()
+            title = parts[12].strip().replace("â€™", "'").lower()
             # author is column 1
-            author = parts[0].strip().lower()
+            author = parts[0].strip().replace("â€™", "'").lower()
             # genre is column 4
-            genre_str = parts[3].strip().lower()
+            genre_str = parts[3].strip().replace("â€™", "'").lower()
             # rating is column 11
             rating_str = parts[10].strip()
 
