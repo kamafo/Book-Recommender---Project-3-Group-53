@@ -1,0 +1,93 @@
+# algorithm 1: polina antonenko
+# basic; based on genre and author
+
+# create Book object class
+class Book:
+    def __init__(self, title, author, genres, rating):
+        self.title = title
+        self.author = author
+        self.genres = genres
+        self.rating = rating
+        self.score = 0
+
+# process data from book database (csv file)
+def load_books(filename):
+    books = []
+
+    # open file
+    with open(filename, 'r', encoding='utf-8') as f:
+        # skip header/first line
+        next(f)
+
+        # split into parts based on commas
+        for line in f:
+            parts = line.strip().split(',')
+
+            # skip incomplete &/or broken lines
+            if len(parts) < 5:
+                continue
+
+            # get specific fields
+            # title is column 13
+            title = parts[12].strip().lower()
+            # author is column 1
+            author = parts[0].strip().lower()
+            # genre is column 4
+            genre_str = parts[3].strip().lower()
+            # rating is column 11
+            rating_str = parts[10].strip()
+
+            # separate genres
+            genres = [g.strip() for g in genre_str.replace(',').split(',') if g.strip()]
+
+            # convert rating to float
+            try:
+                rating = float(rating_str)
+            except:
+                # skip if rating =/= a valid num
+                continue
+
+            # add Book to the list
+            books.append(Book(title, author, genres, rating))
+    return books
+
+# score Books based on user input to know what to recommend first
+def score_books(books, fav_genres, fav_authors, liked_titles):
+    # assign default score
+    for book in books:
+        score = 0
+
+        # add points for liked author
+        if book.author in fav_authors:
+            score += 3
+
+        # add points for liked genre
+        for genre in book.genres:
+            if genre in fav_genres:
+                score += 2
+
+        # make sure books user has already listed arent rec options
+        if book.title in liked_titles:
+            score -= 100
+
+        # save score to Book object
+        book.score = score
+
+# sort & recommend highest scored books
+def rec_books(books, n):
+    # sort in descending order by score & then by rating
+    sorted_books = sorted(books, key=lambda b: (-b.score, -b.rating))
+
+    # show top n books w/ score > 0
+    count = 0
+    for book in sorted_books:
+        # skip books that arent scored well
+        if book.score <= 0:
+            continue
+
+        # format output
+        print(f"{book.title.title()} by {book.author.title()} Score: {book.score} | Rating: {book.rating:.2f}")
+        count += 1
+
+        if count >= n:
+            break
