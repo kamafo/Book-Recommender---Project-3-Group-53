@@ -1,0 +1,246 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Calibri, Tahoma, sans-serif;
+}
+body, html {
+  height: 100%;
+}
+body {
+  background: linear-gradient(to bottom, #1c2d6a 0%, #263c8e 40%, #3458ff 100%);
+  /* background-color: #1c207d; */
+  /* background-color: #d8894c; */
+  /* background: linear-gradient(#d8894c, #ffb09c); */
+  /* background: linear-gradient(#565199, #677993) */
+}
+.container {
+  display: flex;
+  height: 100vh;
+}
+#div2, #div3, #div1 {
+  flex: 1; 
+  padding: 20px;
+}
+#div1 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#div2 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#div2 > .search-row {
+  flex: 1; 
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#div3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+#div3 > .generated-box {
+  color: white;
+  flex: 5; 
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 20px;
+}
+#div3 > .toggle-box {
+  position: relative;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  border-radius: 30px;
+  background-color: white;
+}
+.toggle-box > .toggle-button {
+  flex: 1;
+  position: relative;
+  color: #111b40;
+  font-size:medium;
+  font-weight:500;
+  padding: 10px 70px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+.btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #ffbf27;
+  border-radius: 30px;
+  transition: .2s;
+}
+#titlecard {
+  color: white;
+  height: 40px;
+  text-align: center;
+  font-size: 2rem;
+} 
+.search-box{
+  position: relative;
+  width: 390px; /*300*/
+  background: #fff;
+  margin: 10px;
+  border-radius: 10px;
+}
+.row{
+  display: flex;
+  align-items:center;
+  padding: 5px 10px;
+}
+input{
+  flex: 1;
+  height: 30px;
+  background:transparent;
+  border: 0;
+  outline: 0;
+  font-size: 18px;
+  color: #333;
+}
+.search-button{
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+.search-button .fa-solid{
+  width: 25 px;
+  color: #111b40;
+  font-size: 22px;
+}
+::placeholder{
+  color: #111b40;
+}
+.result-box ul{
+  border-top: 1px solid #999;
+  padding: 7.5px 5px;
+}
+.result-box ul li{
+  color: #111b40;
+  list-style: none;
+  border-radius: 1.5px;
+  padding: 7.5px 5px;
+  cursor: pointer;
+}
+.result-box ul li:hover{
+  background: #e9f3ff;
+}
+.result-box{
+  position: absolute;
+  z-index: 9999;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  /* border-radius: 5px; */
+  max-height: 190px;
+  overflow-y: auto;
+}
+.submitted-box{
+  width: 100%;
+  color:#333;
+  padding: 5px 30px;
+  text-align: left;
+}
+.submitted-item {
+  padding: 5px 10px 5px 20px;
+  margin-top: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  font-weight: 500;
+  text-align: left;
+}
+.generated-box {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+.generated-box > .final-box {
+  flex-grow: 1;
+  color: #111b40;
+  margin-top: 30px;
+  background-color: #ffffff;
+}
+.generate-button {
+  color: #111b40;
+  font-size:xx-large;
+  font-weight: 500;
+  height: 20;
+  border-radius: 40px;
+  border-color: black;
+  border-width: 3px;
+  background-color: #ffbf27;
+  align-items: center;
+  text-align: center;
+}
+.book-info {
+  text-align: left;
+  font-size: 16px;
+  font-weight: normal;
+  color: #111b40;
+  line-height: 1.4;
+  margin-bottom: 30px;
+  margin-left: 15px;
+}
+.book-info .book-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #0a0a23;
+}
+.book-info .book-author,
+.book-info .book-genre,
+.book-info .book-rating {
+  color: #111b40;
+}
+.divider {
+  border-top: 2px solid #111b40;
+  height: 4px;
+  margin: 5px;
+}
+.rating-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  padding: 15px;
+  margin: 0;
+}
+.rating-selected {
+  font-size: 0.9em;
+  font-weight: 500;
+  color: #fff;
+  padding: 8px;
+}
+.rating-box .stars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.stars i {
+  color: #e6e6e6;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.stars i.active {
+  color: #ff9c1a;
+}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Finder</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="static/favicon_io/apple-touch-icon.png">
+    <link rel="manifest" href="static/favicon_io/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/favicon_io/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon_io/favicon-32x32.png">
+    <script src="https://kit.fontawesome.com/562122a53d.js" crossorigin="anonymous"></script>
+  </head>
+
+  
+  <body>
+  <div class="container">
+    <!-- Left Column - 3 search bars -->
+    <div id="div2">
+      <!--Authors Search Bar-->
+      <div class="search-row">
+        <div class="search-box" data-context="authors">
+          <div class="row">
+            <input type="text" id="input-box" placeholder="Enter your favorite authors" autocomplete="off">
+            <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
+          <div class= "result-box"></div>
+        </div>
+
+        <div class= "submitted-box">
+
+        </div>
+      </div>
+      <!--Books Search Bar-->
+      <div class="search-row">
+        <div class="search-box" data-context="books">
+          <div class="row">
+            <input type="text" id="input-box" placeholder="Enter your favorite books" autocomplete="off">
+            <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
+          <div class="result-box"></div>
+        </div>
+
+        <div class= "submitted-box">
+
+        </div>
+      </div>
+      <!--Genres Search Bar-->
+      <div class="search-row">
+        <div class="search-box" data-context="genres">
+          <div class="row">
+            <input type="text" id="input-box" placeholder="Enter your favorite genres" autocomplete="off">
+            <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
+          <div class="result-box"></div>
+        </div>
+
+        <div class= "submitted-box">
+
+        </div>
+      </div>
+    </div>
+    
+    <!-- Middle Column -->
+    <div id="div3">
+      <h1 id="titlecard">Book Finder</h1>
+      <div class="generated-box">
+        <!-- <h2>Description: Lorem Ipsum</h2> -->
+        <h4>BookFinder is a personalized book discovery tool that helps you find your next great read. Simply enter up to three books, authors, or genres you enjoy, and BookFinder will recommend titles tailored to your taste. You can also rate books you’ve already read, and your ratings will influence the current suggestions, helping you find the perfect book to dive into right now.</h4>
+        <div class = "final-box">
+          <h2>Your Books</h2>
+          <hr class="divider">
+          <div id="book-list"></div>
+        </div>
+      </div>
+      <div class="toggle-box">
+        <div class="btn"></div>
+        <button class="toggle-button" onclick="leftClick()">Algorithm 0</button>
+        <button class="toggle-button" onclick="rightClick()">Algorithm 1</button>
+      </div>
+      <button class="generate-button" onclick="generate()">Generate Books</button>
+    </div>
+    
+    <!-- Right Column -->
+    <div id="div1">
+        <div class ="rating-box">
+          <div class="search-box" data-context="books">
+            <div class="row">
+              <input type="text" id="input-box" placeholder="Search and rate books" autocomplete="off">
+              <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class="result-box"></div>
+          </div>
+          <div class="rating-selected"></div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>    
+            <i class="fa-solid fa-star"></i>    
+            <i class="fa-solid fa-star"></i>            
+          </div>
+        </div> 
+        <div class ="rating-box">
+          <div class="search-box" data-context="books">
+            <div class="row">
+              <input type="text" id="input-box" placeholder="Search and rate books" autocomplete="off">
+              <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class="result-box"></div>
+          </div>
+          <div class="rating-selected"></div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>    
+            <i class="fa-solid fa-star"></i>    
+            <i class="fa-solid fa-star"></i>            
+          </div>
+        </div> 
+        <div class ="rating-box">
+          <div class="search-box" data-context="books">
+            <div class="row">
+              <input type="text" id="input-box" placeholder="Search and rate books" autocomplete="off">
+              <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class="result-box"></div>
+          </div>
+          <div class="rating-selected"></div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>    
+            <i class="fa-solid fa-star"></i>    
+            <i class="fa-solid fa-star"></i>            
+          </div>
+        </div> 
+
+        <div class ="rating-box">
+          <div class="search-box" data-context="books">
+            <div class="row">
+              <input type="text" id="input-box" placeholder="Search and rate books" autocomplete="off">
+              <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class="result-box"></div>
+          </div>
+          <div class="rating-selected"></div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>    
+            <i class="fa-solid fa-star"></i>    
+            <i class="fa-solid fa-star"></i>            
+          </div>
+        </div> 
+    </div>
+    
+  </div>
+  <script src="static/autocomplete.js"></script>
+</body>
+</html>
