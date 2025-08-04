@@ -1,3 +1,4 @@
+from alg1 import load_books, Book
 
 def display_main_menu():
     print("\nWelcome to the Book Recommender!")
@@ -61,8 +62,22 @@ def main():
         elif choice == '5':
             if not validate_preferences(favorite_books, favorite_genres, favorite_authors, book_ratings):
                 continue
+            try:
+                books = load_books('books.csv')  # Make sure books.csv is in your project folder
+            except FileNotFoundError:
+                print("Error: 'books.csv' not found.")
+                continue
+
+            for book in books:
+                if any(g in book.genres for g in favorite_genres):
+                    book.score += 1
+                if book.author in favorite_authors:
+                    book.score += 1
+
+            sorted_books = sorted(books, key=lambda b: (-b.score, -b.rating))
             print("\n--- Recommended for You ---")
-            print("(*This is where algorithm will generate recommendations*)")
+            for b in sorted_books[:5]:
+                print(f"{b.title.title()} by {b.author} | Rating: {b.rating}")
         elif choice == '6':
             print("Thank you for using the Book Recommender. Goodbye!")
             break
