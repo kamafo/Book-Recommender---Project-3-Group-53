@@ -1,4 +1,5 @@
 from alg1 import load_books, Book
+import alg2
 
 def display_main_menu():
     print("\nWelcome to the Book Recommender!")
