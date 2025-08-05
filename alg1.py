@@ -1,3 +1,5 @@
+import csv
+import gzip
 # algorithm 1: polina antonenko
 # basic; based on genre and author
 
@@ -15,30 +17,31 @@ def load_books(filename):
     books = []
 
     # open file
-    with open(filename, 'r', encoding='utf-8') as f:
+    with gzip.open(filename, 'rt', encoding='utf-8') as f:
         # skip header/first line
-        next(f)
+        reader = csv.reader(f)
+        next(reader, None)
 
         # split into parts based on commas
-        for line in f:
-            parts = line.strip().split(',')
-
+        for parts in reader:
             # skip incomplete &/or broken lines
-            if len(parts) < 5:
+            if len(parts) < 13:
                 continue
 
             # get specific fields (dataset keeps changing ' to â€™ so that part is fixed)
-            # title is column 13
-            title = parts[12].strip().replace("â€™", "'").lower()
-            # author is column 1
-            author = parts[0].strip().replace("â€™", "'").lower()
+            # title is column 12
+            title = parts[11].strip().replace("â€™", "'")
+            # author is column 1, select first author if several
+            raw_author = parts[0].strip()
+            first_author = raw_author.split(',')[0].strip()
+            author = first_author.replace("â€™", "'")
             # genre is column 4
-            genre_str = parts[3].strip().replace("â€™", "'").lower()
-            # rating is column 11
-            rating_str = parts[10].strip()
+            genre_str = parts[3].strip().replace("â€™", "'")
+            # rating is column 10
+            rating_str = parts[9].strip()
 
             # separate genres
-            genres = [g.strip() for g in genre_str.replace(',').split(',') if g.strip()]
+            genres = [g.strip() for g in genre_str.split(',') if g.strip()]
 
             # convert rating to float
             try:
@@ -78,6 +81,7 @@ def rec_books(books, n):
     # sort in descending order by score & then by rating
     sorted_books = sorted(books, key=lambda b: (-b.score, -b.rating))
 
+    results = []
     # show top n books w/ score > 0
     count = 0
     for book in sorted_books:
@@ -85,9 +89,15 @@ def rec_books(books, n):
         if book.score <= 0:
             continue
 
+        genre = book.genres[0].title() if book.genres else ""
+
         # format output
         print(f"{book.title.title()} by {book.author.title()} Score: {book.score} | Rating: {book.rating:.2f}")
         count += 1
 
+        results.append([book.title.title(), book.author.title(), genre, f"{book.rating:.1f}★"])
+        
         if count >= n:
             break
+    
+    return results
