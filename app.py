@@ -1,31 +1,27 @@
 from flask import Flask, jsonify, render_template, request
+from alg1 import load_books, score_books, rec_books
+from alg2 import load_books2, score_books_by_desc, recommend_books
 
 app = Flask(__name__)
-authors = [
-    "Jane Austen", "George Orwell", "Mark Twain", "J.K. Rowling", "Ernest Hemingway",
-    "F. Scott Fitzgerald", "Leo Tolstoy", "Virginia Woolf", "Agatha Christie", "Charles Dickens",
-    "Haruki Murakami", "Stephen King", "J.R.R. Tolkien", "C.S. Lewis", "Chinua Achebe",
-    "Gabriel García Márquez", "Franz Kafka", "Toni Morrison", "Fyodor Dostoevsky", "Ray Bradbury",
-    "Isaac Asimov", "Kurt Vonnegut", "Margaret Atwood", "Emily Dickinson", "Homer",
-    "Herman Melville", "James Joyce", "Zora Neale Hurston", "Oscar Wilde", "Sylvia Plath"
-]
-genres = [
-    "Fantasy", "Science Fiction", "Mystery", "Thriller", "Romance",
-    "Historical Fiction", "Horror", "Adventure", "Young Adult", "Dystopian",
-    "Literary Fiction", "Biography", "Memoir", "Self-Help", "Philosophy",
-    "Poetry", "Graphic Novel", "Short Stories", "Crime", "Humor"
+
+result_books = [["Book", "Author", "Genre", "Rating★"]
 ]
 
-books = [
-    "The Hobbit", "Dune", "The Girl with the Dragon Tattoo", "Gone Girl", "Pride and Prejudice",
-    "The Book Thief", "Dracula", "Treasure Island", "The Fault in Our Stars", "The Hunger Games",
-    "The Catcher in the Rye", "Steve Jobs", "Educated", "The Power of Now", "Meditations",
-    "The Sun and Her Flowers", "Maus", "Tenth of December", "The Silence of the Lambs", "Bossypants"
-]
+def load_data():
+    # Load books from CSV and add data to respective array
+    all_books = load_books('books.csv.gz')
+    books = [book.title for book in all_books]
+    authors = list(set(book.author for book in all_books))
+    genres = list(set(genre for book in all_books for genre in book.genres))
 
-result_books = [["Book", "Author", "Genre", "Rating★"],
-    ["The Great Gatsby", "F. Scott Fitzgerald", "Classic", "4.5★"]
-]
+    a2_all_books = load_books2('books.csv.gz')
+    a2_books = [book.title for book in all_books]
+    a2_authors = list(set(book.author for book in all_books))
+    a2_genres = list(set(genre for book in all_books for genre in book.genres))
+
+    return all_books, books, authors, genres, a2_all_books, a2_books, a2_authors, a2_genres
+
+all_books, books, authors, genres, a2_all_books, a2_books, a2_authors, a2_genres = load_data()
 
 @app.route('/')
 def index():
@@ -50,12 +46,20 @@ def get_genres():
 @app.route('/get_result_books', methods = ['POST'])
 def get_result_books():
     payload = request.get_json(force=True)
-    authors = payload.get('authors', [])
-    books = payload.get('books', [])
-    genres = payload.get('genres', [])
-    print(authors)
-    print(books)
-    print(genres)
+    fav_authors = payload.get('authors', [])
+    fav_books = payload.get('books', [])
+    fav_genres = payload.get('genres', [])
+    algorithm = payload.get('algorithm', [])
+
+    if algorithm == 0:
+        score_books(all_books, fav_genres, fav_authors, fav_books)
+        result_books = rec_books(all_books, 5)
+
+    if algorithm == 1:
+        score_books_by_desc(a2_all_books, fav_books)
+        result_books = recommend_books(a2_all_books, 5)
+
+    print(algorithm)
     return jsonify(result_books)
 
 if __name__ == '__main__':
