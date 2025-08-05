@@ -10,7 +10,7 @@ A personalized book recommendation system that helps users discover new reads ba
 - **Team Members:**
   - Kamafo Neizer-Ashun (@kamafo)
   - Benjamin Nguyen (@benjamin-username)
-  - Polina Antonenko (@polina-username)
+  - Polina Antonenko (@pantonenko)
 
 - **Course:** COP3530  
 - **Semester:** Summer C 2025  
